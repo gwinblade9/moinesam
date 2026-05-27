@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero" style="padding: 25px 20px;">
+    <h2><span>Панель администратора</span></h2>
+    <p>Управление заявками клиентов</p>
+</div>
+
+<div class="admin-stats">
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.total }}</span>
+        <span class="stat-label">   Всего заявок</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.new }}</span>
+        <span class="stat-label">   Новых</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.in_progress }}</span>
+        <span class="stat-label">   В работе</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.completed }}</span>
+        <span class="stat-label">   Выполнено</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ stats.cancelled }}</span>
+        <span class="stat-label">   Отменено</span>
+    </div>
+</div>
+
+<div class="admin-table">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Дата</th>
+                <th>Заказчик</th>
+                <th>Телефон</th>
+                <th>Услуга</th>
+                <th>Дата уборки</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in requests_data %}
+            <tr>
+                <td>#{{ item.request.id }}</td>
+                <td>{{ item.request.created_at.strftime('%d.%m.%Y') if item.request.created_at else '' }}</td>
+                <td>{{ item.user.fullname }}</td>
+                <td>{{ item.user.phone }}</td>
+                <td>{{ item.request.service_type|truncate(25) }}</td>
+                <td>{{ item.request.preferred_date }}<br><small>{{ item.request.preferred_time }}</small></td>
+                <td>
+                    <span class="status 
+                        {% if item.request.status == 'новая заявка' %}status-nova
+                        {% elif item.request.status == 'в работе' %}status-v-rabote
+                        {% elif item.request.status == 'выполнено' %}status-vypolneno
+                        {% elif item.request.status == 'отменено' %}status-otmeneno
+                        {% endif %}">
+                        {% if item.request.status == 'новая заявка' %}🟡 Новая
+                        {% elif item.request.status == 'в работе' %}🔵 В работе
+                        {% elif item.request.status == 'выполнено' %}✅ Выполнено
+                        {% elif item.request.status == 'отменено' %}❌ Отменено
+                        {% endif %}
+                    </span>
+                    {% if item.request.cancel_reason %}
+                        <div style="font-size: 10px; color: #ff8a95; margin-top: 5px;">
+                            Причина: {{ item.request.cancel_reason }}
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('update_status', request_id=item.request.id) }}" onsubmit="return validateCancelReason(this)">
+                        <select name="status" class="status-select" data-request-id="{{ item.request.id }}" style="padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 8px; width: 140px;">
+                            <option value="новая заявка" {% if item.request.status == 'новая заявка' %}selected{% endif %}>🟡 Новая</option>
+                            <option value="в работе" {% if item.request.status == 'в работе' %}selected{% endif %}>🔵 В работу</option>
+                            <option value="выполнено" {% if item.request.status == 'выполнено' %}selected{% endif %}>✅ Выполнено</option>
+                            <option value="отменено" {% if item.request.status == 'отменено' %}selected{% endif %}>❌ Отменить</option>
+                        </select>
+                        
+                        <div id="cancel-reason-container-{{ item.request.id }}" style="display: {% if item.request.status == 'отменено' %}block{% else %}none{% endif %}; margin-top: 8px;">
+                            <input type="text" 
+                                   name="cancel_reason" 
+                                   id="cancel-reason-{{ item.request.id }}"
+                                   placeholder="Укажите причину отмены" 
+                                   value="{{ item.request.cancel_reason if item.request.cancel_reason else '' }}"
+                                   style="width: 100%; padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.3); color: white; font-size: 12px;">
+                            <small style="font-size: 10px; color: #ff8a95; display: block; margin-top: 5px;">
+                                ⚠️ Обязательно для отмены
+                            </small>
+                        </div>
+                        
+                        <button type="submit" style="margin-top: 10px; padding: 8px 16px; font-size: 12px; background: rgba(255,215,0,0.2); border: 1px solid var(--gold); border-radius: 12px; color: var(--gold); cursor: pointer; width: 100%;">
+                            <i class="fas fa-save"></i> Обновить
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if not requests_data %}
+<div class="empty-state">
+    <i class="fas fa-inbox"></i>
+    <p>Заявок пока нет</p>
+    <p style="font-size: 14px;">Когда клиенты создадут заявки, они появятся здесь</p>
+</div>
+{% endif %}
+
+<script>
+
+    document.querySelectorAll('.status-select').forEach(select => {
+        select.addEventListener('change', function() {
+            const requestId = this.getAttribute('data-request-id');
+            const container = document.getElementById(`cancel-reason-container-${requestId}`);
+            
+            if (this.value === 'отменено') {
+                container.style.display = 'block';
+
+                document.getElementById(`cancel-reason-${requestId}`).required = true;
+            } else {
+                container.style.display = 'none';
+                document.getElementById(`cancel-reason-${requestId}`).required = false;
+            }
+        });
+    });
+    
+    function validateCancelReason(form) {
+        const select = form.querySelector('.status-select');
+        const cancelReason = form.querySelector('input[name="cancel_reason"]');
+        
+        if (select.value === 'отменено' && (!cancelReason.value || cancelReason.value.trim() === '')) {
+            alert('⚠️ При отмене заявки необходимо указать причину!');
+            cancelReason.style.borderColor = '#ff4757';
+            cancelReason.focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<style>
+    .admin-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+    
+    .admin-table th {
+        background: rgba(255, 215, 0, 0.1);
+        padding: 14px 10px;
+        text-align: left;
+        color: var(--gold);
+        font-weight: 600;
+    }
+    
+    .admin-table td {
+        padding: 12px 10px;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        vertical-align: top;
+    }
+    
+    .status-v-rabote {
+        background: rgba(0, 100, 255, 0.15);
+        color: #4488ff;
+        border: 1px solid #4488ff;
+    }
+    
+    @media (max-width: 768px) {
+        .admin-table {
+            overflow-x: auto;
+        }
+        .admin-table table {
+            min-width: 700px;
+        }
+    }
+</style>
+{% endblock %}

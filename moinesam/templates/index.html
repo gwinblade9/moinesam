@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="hero">
+    <h2>Чистота, которая<br><span>вдохновляет</span></h2>
+    <p>Профессиональная уборка жилых и производственных помещений. Работаем быстро, качественно и с любовью к каждой детали.</p>
+    {% if not session.user_id %}
+        <a href="{{ url_for('register') }}" class="btn btn-primary">
+            <i class="fas fa-sparkles"></i> Начать сиять →  
+        </a>
+    {% else %}
+        <a href="{{ url_for('create_request') }}" class="btn btn-primary">
+            <i class="fas fa-magic"></i> Создать заявку →
+        </a>
+    {% endif %}
+</div>
+
+<div class="benefits">
+    <div class="benefit">
+        <i class="fas fa-trophy"></i>
+        Гарантия 100%<br>
+        <span style="font-size: 10px; opacity: 0.7;">результата</span>
+    </div>
+    <div class="benefit">
+        <i class="fas fa-clock"></i>
+        Приезд за 30 мин<br>
+        <span style="font-size: 10px; opacity: 0.7;">после заказа</span>
+    </div>
+    <div class="benefit">
+        <i class="fas fa-leaf"></i>
+        Эко-средства<br>
+        <span style="font-size: 10px; opacity: 0.7;">без аллергии</span>
+    </div>
+    <div class="benefit">
+        <i class="fas fa-credit-card"></i>
+        Оплата после<br>
+        <span style="font-size: 10px; opacity: 0.7;">уборки</span>
+    </div>
+    <div class="benefit">
+        <i class="fas fa-shield-alt"></i>
+        Страховка<br>
+        <span style="font-size: 10px; opacity: 0.7;">имущества</span>
+    </div>
+</div>
+
+<div class="gallery-section">
+    <h3><i class="fas fa-users"></i> НАШИ ПРОФЕССИОНАЛЫ</h3>
+    <p style="text-align: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 25px;">
+        Опытные клинеры с современным оборудованием
+    </p>
+    <div class="photo-grid">
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/cleaners/01.jpg') }}" alt="Клинер"><div class="caption">Анна — 5 лет опыта</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/cleaners/02.jpg') }}" alt="Клинер"><div class="caption">Дмитрий — супервайзер</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/cleaners/03.jpg') }}" alt="Клинер"><div class="caption">Екатерина — химчистка</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/cleaners/04.jpg') }}" alt="Клинер"><div class="caption">Сергей — ген. уборка</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/cleaners/05.jpg') }}" alt="Клинер"><div class="caption">Марина — после ремонта</div></div>
+
+    </div>
+    
+    <h3><i class="fas fa-broom"></i> СЛОЖНЫЕ ЗАГРЯЗНЕНИЯ — НАМ НЕ СТРАШНЫ</h3>
+    <p style="text-align: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 25px;">
+        Убираем помещения любой сложности
+    </p>
+    <div class="photo-grid">
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/dirty/01.jpg') }}" alt="До уборки"><div class="caption">Запущенная квартира</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/dirty/02.jpg') }}" alt="До уборки"><div class="caption">Сильные загрязнения</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/dirty/03.jpg') }}" alt="До уборки"><div class="caption">После ремонта</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/dirty/04.jpg') }}" alt="До уборки"><div class="caption">Грязный ковер</div></div>
+    </div>
+    
+    <h3><i class="fas fa-tools"></i> ПРОФЕССИОНАЛЬНОЕ ОБОРУДОВАНИЕ</h3>
+    <p style="text-align: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 25px;">
+        Только проверенные бренды и средства
+    </p>
+    <div class="photo-grid">
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/tools/01.jpg') }}" alt="Инструменты"><div class="caption">domil Eco - экогель</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/tools/02.jpg') }}" alt="Инструменты"><div class="caption">ПКФ «Промтеплострой» "Умелец"</div></div>
+        <div class="photo-card"><img src="{{ url_for('static', filename='images/tools/03.jpg') }}" alt="Инструменты"><div class="caption">Самые инновационные средства против загрязнений</div></div>
+    </div>
+</div>
+
+<div class="gallery-section">
+    <h3><i class="fas fa-star"></i> ЧТО ГОВОРЯТ НАШИ КЛИЕНТЫ</h3>
+    <div style="display: flex; gap: 20px; overflow-x: auto; padding: 10px 0 20px;">
+        <div style="min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 24px; padding: 20px; border: 1px solid rgba(255,215,0,0.1);">
+            <div style="margin-bottom: 12px;">
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+            </div>
+            <p style="font-size: 14px; line-height: 1.5; margin-bottom: 15px;">"Нереально чисто! Вернулись домой — квартира сияет. Спасибо команде! Буду заказывать ещё."</p>
+            <p style="font-size: 12px; color: #a0a8c0;">— Елена, Москва</p>
+        </div>
+        <div style="min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 24px; padding: 20px; border: 1px solid rgba(255,215,0,0.1);">
+            <div style="margin-bottom: 12px;">
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+            </div>
+            <p style="font-size: 14px; line-height: 1.5; margin-bottom: 15px;">"Очень удобный сервис. Заказал за 2 минуты, приехали быстро. Качество отличное!"</p>
+            <p style="font-size: 12px; color: #a0a8c0;">— Дмитрий, Санкт-Петербург</p>
+        </div>
+        <div style="min-width: 280px; background: rgba(255,255,255,0.05); border-radius: 24px; padding: 20px; border: 1px solid rgba(255,215,0,0.1);">
+            <div style="margin-bottom: 12px;">
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+                <i class="fas fa-star" style="color: #ffd700;"></i>
+            </div>
+            <p style="font-size: 14px; line-height: 1.5; margin-bottom: 15px;">"Химчистка ковров — просто бомба! Пятна исчезли как по волшебству. Рекомендую!"</p>
+            <p style="font-size: 12px; color: #a0a8c0;">— Марина, Казань</p>
+        </div>
+    </div>
+</div>
+
+<div class="gallery-section">
+    <h3><i class="fas fa-ruble-sign"></i> НАШИ ЦЕНЫ</h3>
+    <div style="display: grid; gap: 15px;">
+        <div style="background: rgba(255,255,255,0.04); border-radius: 20px; padding: 18px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-broom"></i> Общий клининг</span>
+            <span style="color: var(--gold); font-weight: 700;">от 1 500 ₽</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border-radius: 20px; padding: 18px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-home"></i> Генеральная уборка</span>
+            <span style="color: var(--gold); font-weight: 700;">от 3 000 ₽</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border-radius: 20px; padding: 18px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-hard-hat"></i> Послестроительная уборка</span>
+            <span style="color: var(--gold); font-weight: 700;">от 4 500 ₽</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border-radius: 20px; padding: 18px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i class="fas fa-couch"></i> Химчистка ковров и мебели</span>
+            <span style="color: var(--gold); font-weight: 700;">от 2 500 ₽</span>
+        </div>
+    </div>
+    <p style="text-align: center; font-size: 12px; color: var(--text-secondary); margin-top: 20px;">
+        * Точная стоимость рассчитывается после осмотра помещения
+    </p>
+</div>
+
+<div class="action-buttons">
+    {% if not session.user_id %}
+        <a href="{{ url_for('register') }}" class="btn btn-primary">
+            <i class="fas fa-phone"></i> Заказать клининг
+        </a>
+    {% else %}
+        <a href="{{ url_for('create_request') }}" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Оставить заявку
+        </a>
+    {% endif %}
+</div>
+{% endblock %}

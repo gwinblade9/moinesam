@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero" style="padding: 20px 0;">
+    <h2><span>Мои заявки</span></h2>
+    <p>Здравствуйте, {{ user.fullname }}!</p>
+</div>
+
+{% if requests %}
+    <div class="requests-list">
+        {% for req in requests %}
+        <div class="request-card">
+            <div class="request-header">
+                <span class="request-id">Заявка #{{ req.id }}</span>
+                <span class="request-date"><i class="far fa-calendar-alt"></i> {{ req.created_at.strftime('%d.%m.%Y %H:%M') if req.created_at else '' }}</span>
+            </div>
+            <div class="status 
+                {% if req.status == 'новая заявка' %}status-nova
+                {% elif req.status == 'в работе' %}status-v-rabote
+                {% elif req.status == 'выполнено' %}status-vypolneno
+                {% elif req.status == 'отменено' %}status-otmeneno
+                {% endif %}">
+                {% if req.status == 'новая заявка' %}🟡 Новая
+                {% elif req.status == 'в работе' %}🔵 В работе
+                {% elif req.status == 'выполнено' %}✅ Выполнено
+                {% elif req.status == 'отменено' %}❌ Отменено
+                {% endif %}
+            </div>
+            <div class="request-details">
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-map-marker-alt"></i> Адрес:</span><span class="detail-value">{{ req.address }}</span></div>
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-phone"></i> Телефон:</span><span class="detail-value">{{ req.contact_phone }}</span></div>
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-broom"></i> Услуга:</span><span class="detail-value">{{ req.service_type }}</span></div>
+                <div class="detail-row"><span class="detail-label"><i class="far fa-calendar"></i> Дата/время:</span><span class="detail-value">{{ req.preferred_date }} {{ req.preferred_time }}</span></div>
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-credit-card"></i> Оплата:</span><span class="detail-value">{{ req.payment_type }}</span></div>
+                {% if req.cancel_reason %}
+                <div class="detail-row"><span class="detail-label"><i class="fas fa-info-circle"></i> Причина:</span><span class="detail-value" style="color: #ff8a95;">{{ req.cancel_reason }}</span></div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <i class="fas fa-clipboard-list"></i>
+        <p>У вас пока нет заявок</p>
+    </div>
+{% endif %}
+
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{{ url_for('create_request') }}" class="btn btn-secondary"><i class="fas fa-plus"></i> Новая заявка</a>
+</div>
+{% endblock %}

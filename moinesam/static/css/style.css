@@ -1,0 +1,572 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark: #0a0e1a;
+    --gold: #ffd700;
+    --mint: #00ff9d;
+    --text: #ffffff;
+    --text-secondary: #a0a8c0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0a0e1a 0%, #060914 100%);
+    min-height: 100vh;
+    color: var(--text);
+}
+
+.container {
+    max-width: 1200px;  
+    width: 95%;
+    margin: 0 auto;
+    background: rgba(18, 24, 43, 0.85);
+    backdrop-filter: blur(20px);
+    min-height: 100vh;
+    border-left: 1px solid rgba(255, 215, 0, 0.15);
+    border-right: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 0;
+}
+
+header {
+    padding: 40px 30px 30px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+header h1 {
+    font-size: 48px;
+    background: linear-gradient(135deg, var(--gold), var(--mint));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+}
+
+header p {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--text-secondary);
+}
+
+nav {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 12px 24px;
+    font-size: 15px;
+    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    transition: 0.3s;
+}
+
+nav a i {
+    margin-right: 8px;
+}
+
+nav a:hover {
+    border-color: var(--gold);
+    background: rgba(255, 215, 0, 0.1);
+    color: var(--text);
+}
+
+.hero {
+    text-align: center;
+    padding: 60px 40px;
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.hero h2 span {
+    background: linear-gradient(135deg, var(--gold), var(--mint));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 35px;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn, button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 42px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: 0.3s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary, button[type="submit"] {
+    background: linear-gradient(135deg, var(--gold), #e6b800);
+    color: var(--dark);
+}
+
+.btn-primary:hover, button[type="submit"]:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+}
+
+.form-group {
+    margin-bottom: 35px;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+label i {
+    margin-right: 10px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 20px;
+    color: var(--text);
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.photo-card {
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+.photo-card:hover {
+    transform: translateY(-5px);
+}
+
+.photo-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.photo-card .caption {
+    padding: 15px;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.benefit {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+    border-radius: 20px;
+    padding: 25px 15px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.benefit:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+}
+
+.benefit i {
+    display: block;
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: var(--gold);
+}
+
+.requests-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.request-card {
+    background: rgba(10, 14, 26, 0.8);
+    border-radius: 28px;
+    padding: 25px;
+    border: 1px solid rgba(255, 215, 0, 0.1);
+    transition: 0.3s;
+    height: 100%;
+}
+
+.request-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+}
+
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed rgba(255, 215, 0, 0.15);
+}
+
+.request-id {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.request-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.status-nova { background: rgba(255, 215, 0, 0.15); color: var(--gold); }
+.status-vypolneno { background: rgba(0, 255, 157, 0.15); color: var(--mint); }
+.status-otmeneno { background: rgba(255, 71, 87, 0.15); color: #ff8a95; }
+
+.request-details {
+    margin-top: 15px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+
+.detail-label {
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    font-weight: 500;
+    text-align: right;
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.stat-card {
+    background: rgba(255, 215, 0, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--gold);
+}
+
+.stat-label {
+    font-size: 12px;
+    margin-top: 8px;
+    color: var(--text-secondary);
+}
+
+.admin-table {
+    margin: 30px 0;
+    overflow-x: auto;
+}
+
+.admin-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.admin-table th {
+    background: rgba(255, 215, 0, 0.1);
+    padding: 16px 12px;
+    text-align: left;
+    color: var(--gold);
+}
+
+.admin-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.flash {
+    padding: 18px 30px;
+    margin: 25px 30px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.flash.success {
+    background: rgba(0, 255, 157, 0.15);
+    border: 1px solid var(--mint);
+    color: var(--mint);
+}
+
+.flash.error {
+    background: rgba(255, 71, 87, 0.15);
+    border: 1px solid #ff4757;
+    color: #ff8a95;
+}
+
+.gallery-section {
+    margin: 60px 0;
+}
+
+.gallery-section h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.gallery-section h3 i {
+    margin-right: 12px;
+    color: var(--gold);
+}
+
+.gallery-section h3::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--mint));
+    margin: 15px auto 0;
+    border-radius: 3px;
+}
+
+.reviews-scroll {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    padding: 15px 0 25px;
+}
+
+.review-card {
+    min-width: 350px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 24px;
+    padding: 25px;
+    border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.prices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.price-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 20px;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.price-card:hover {
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.price-name {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.price-name i {
+    margin-right: 12px;
+    color: var(--gold);
+}
+
+.price-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+footer {
+    text-align: center;
+    padding: 35px 30px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    margin-top: 50px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 30px;
+    color: var(--text-secondary);
+}
+
+.empty-state i {
+    font-size: 80px;
+    margin-bottom: 25px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+main {
+    padding: 20px 30px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        max-width: 100%;
+        border-left: none;
+        border-right: none;
+    }
+    
+    main {
+        padding: 15px 20px;
+    }
+    
+    .hero h2 {
+        font-size: 32px;
+    }
+    
+    .hero p {
+        font-size: 16px;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .requests-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    nav a {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    header h1 {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 10px 15px;
+    }
+    
+    .hero {
+        padding: 40px 20px;
+    }
+    
+    .hero h2 {
+        font-size: 28px;
+    }
+    
+    .btn, button[type="submit"] {
+        padding: 14px 30px;
+        font-size: 16px;
+    }
+    
+    .photo-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .benefits {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .flash {
+        margin: 15px;
+        padding: 12px 20px;
+    }
+    
+    .gallery-section h3 {
+        font-size: 22px;
+    }
+}

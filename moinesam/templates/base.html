@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="description" content="Мой Не Сам — премиум портал клининговых услуг. Профессиональная уборка жилых и производственных помещений.">
+    <title>Мой Не Сам | Премиум клининг</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> МОЙ НЕ САМ </h1>
+            <p>ПРЕМИУМ КЛИНИНГ С ДУШОЙ</p>
+            <nav>
+                <a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Главная</a>
+                {% if session.user_id %}
+                    <a href="{{ url_for('dashboard') }}"><i class="fas fa-clipboard-list"></i> Мои заявки</a>
+                    <a href="{{ url_for('create_request') }}"><i class="fas fa-plus-circle"></i> Новая</a>
+                    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Выход</a>
+                    {% if session.is_admin %}
+                        <a href="{{ url_for('admin_panel') }}"><i class="fas fa-crown"></i> Админка</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('login') }}"><i class="fas fa-key"></i> Вход</a>
+                    <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Регистрация</a>
+                {% endif %}
+            </nav>
+        </header>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        <i class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer>
+            <p>© Мой Не Сам — Чистота, которой доверяют</p>
+            <p style="font-size: 9px; margin-top: 8px; opacity: 0.6;">Премиум клининг с 500 года до нашей эры</p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

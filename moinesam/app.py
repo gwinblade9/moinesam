@@ -118,7 +118,7 @@ def login():
             session['user_fullname'] = user.fullname
             session['is_admin'] = user.is_admin
             
-            flash(f'✨ С возвращением, {user.fullname}! ✨', 'success')
+            flash(f' С возвращением, {user.fullname}! ', 'success')
             
             if user.is_admin:
                 return redirect(url_for('admin_panel'))
